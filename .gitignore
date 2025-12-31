@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+
+# Anaconda
+anaconda_projects/
+
+# Data & temp
+data/
+temp_audio/
+assets/*.wav
+assets/*.mp3
+assets/*.mp4
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
