@@ -90,62 +90,115 @@ VoiceBridge-AI/
 │   ├── app.py
 │   ├── routes/
 │   ├── services/
+│   │   ├── asr.py
+│   │   ├── translation.py
+│   │   ├── tts.py
+│   │   ├── pipeline.py
+│   │   └── video_pipeline.py
 │   └── requirements.txt
+│
 ├── frontend/
 │   ├── src/
 │   ├── public/
 │   └── package.json
+│
 ├── notebooks/
-│   └── experiments.ipynb
+│   ├── audio_preprocessing.ipynb
+│   ├── whisper_training.ipynb
+│   └── whisper_inference.ipynb
+│
+├── .gitignore
+├── LICENSE
 └── README.md
+
 ```
 
 ---
 
 ## ⚙️ Installation & Setup
 
+**1️⃣ Clone the Repository**
+```
+git clone https://github.com/AnushkaNegi27/VoiceBridge-AI.git
+cd VoiceBridge-AI
+```
 
-**Backend**
+**2️⃣ Backend Setup (Python Virtual Environment)**
 ```
 cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows
+venv\Scripts\activate
+
+# Linux / Mac
+source venv/bin/activate
+
+```
+Install Dependencies:
+```
 pip install -r requirements.txt
+```
+Run backend server:
+```
 uvicorn app:app --reload
 ```
-**Frontend**
+Backend will run at:
 ```
-cd frontend
-npm install
-npm run dev
+http://127.0.0.1:8000
 ```
 
+**3️⃣ Frontend Setup (React)**
+```
+cd ../frontend
+npm install
+npm run dev
+
+```
+
+Frontend will run at:
+```
+http://localhost:5173
+```
+
+---
 
 ## 🎯 Project Goals
 
-Build a real-world AI pipeline, not just a demo
+-Build a real-world AI pipeline, not just a demo
 
-Emphasize modular design and extensibility
+-Emphasize modular design and extensibility
 
-Support audio + video workflows
+-Support audio + video workflows
 
-Balance performance and language coverage
+-Balance performance and language coverage
 
 ---
 
 ## 🔮 Future Improvements
 
-Real-time microphone-based translation
+🎤 Real-time microphone translation
 
-Streaming inference for long media files
+⏱️ Streaming inference for long files
 
-Subtitle generation alongside audio translation
+📝 Subtitle generation
 
-Cloud deployment & scalability enhancements
+☁️ Cloud deployment (Docker / CI-CD)
 
 ---
 
 ## 👤 Author
 
 Anushka Negi
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
 
 
 
