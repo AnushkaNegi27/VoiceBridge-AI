@@ -1,27 +1,22 @@
 import subprocess
 import os
 
-def merge_audio_tracks(
-    video_path: str,
-    translated_audio_path: str,
-    output_path: str
-):
-    """
-    Merges original video + translated audio into a multi-track MP4
-    """
-
-    command = [
+def merge_audio_tracks(video_path, translated_audio_path, output_path):
+    subprocess.run([
         "ffmpeg",
+        "-y",
         "-i", video_path,
         "-i", translated_audio_path,
-        "-map", "0:v",
-        "-map", "0:a?",
-        "-map", "1:a",
+
+        # 🔥 ONLY video from original
+        "-map", "0:v:0",
+
+        # 🔥 ONLY translated audio
+        "-map", "1:a:0",
+
         "-c:v", "copy",
         "-c:a", "aac",
         "-shortest",
-        output_path
-    ]
 
-    subprocess.run(command, check=True)
-    return output_path
+        output_path
+    ], check=True)

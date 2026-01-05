@@ -1,12 +1,38 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Translate from "./pages/Translate";
+import { useState } from "react";
+import Header from "./components/Header";
+import Hero from "./sections/Hero";
+import InputTypeSection from "./sections/InputTypeSection";
+import ConfigurationSection from "./sections/ConfigurationSection";
+import OutputSection from "./sections/OutputSection";
 
-export default function App() {
+function App() {
+  const [result, setResult] = useState(null);
+
+  // 🔥 LANGUAGE STATE (VERY IMPORTANT)
+  const [sourceLang, setSourceLang] = useState("en");
+  const [targetLang, setTargetLang] = useState("hi");
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/translate" element={<Translate />} />
-    </Routes>
+    <div className="min-h-screen">
+      <Header />
+      <Hero />
+
+      <InputTypeSection
+        setResult={setResult}
+        sourceLang={sourceLang}
+        targetLang={targetLang}
+      />
+
+      <ConfigurationSection
+        sourceLang={sourceLang}
+        setSourceLang={setSourceLang}
+        targetLang={targetLang}
+        setTargetLang={setTargetLang}
+      />
+
+      {result && <OutputSection result={result} />}
+    </div>
   );
 }
+
+export default App;

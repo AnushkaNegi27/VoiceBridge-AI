@@ -1,6 +1,8 @@
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import FileResponse
 from fastapi.responses import JSONResponse
+from fastapi import Form
+
 import shutil
 import os
 
@@ -11,8 +13,7 @@ from services.pipeline import speech_to_speech
 from services.packaging import merge_audio_tracks
 from services.video_pipeline import video_to_translated_video
 from services.master_pipeline import process_file
-
-
+from services.youtube_video_pipeline import process_youtube_video
 
 router = APIRouter()
 
@@ -70,9 +71,10 @@ def generate_tts(
 @router.post("/speech-to-speech")
 def speech_to_speech_api(
     file: UploadFile = File(...),
-    source_lang: str = "en",
-    target_lang: str = "hi"
+    source_lang: str = Form(...),
+    target_lang: str = Form(...)
 ):
+
     file_path = f"temp_audio/{file.filename}"
 
     with open(file_path, "wb") as f:
@@ -121,9 +123,10 @@ def ott_export(
 @router.post("/video-translate")
 def video_translate(
     video: UploadFile = File(...),
-    source_lang: str = "en",
-    target_lang: str = "hi"
+    source_lang: str = Form(...),
+    target_lang: str = Form(...)
 ):
+
     video_path = f"temp_audio/{video.filename}"
 
     with open(video_path, "wb") as v:
@@ -145,9 +148,10 @@ def video_translate(
 @router.post("/process")
 def process_api(
     file: UploadFile = File(...),
-    source_lang: str = "en",
-    target_lang: str = "hi"
+    source_lang: str = Form(...),
+    target_lang: str = Form(...)
 ):
+
     file_path = f"temp_audio/{file.filename}"
 
     with open(file_path, "wb") as f:
@@ -160,15 +164,59 @@ def process_api(
     )
 
     if result["type"] == "audio":
-        return FileResponse(
-            result["output_path"],
-            media_type="audio/wav",
-            filename="translated.wav"
-        )
+        return JSONResponse({
+            "original_text": result["original_text"],
+            "translated_text": result["translated_text"],
+            "audio_url": f"http://127.0.0.1:8000/download/{os.path.basename(result['audio_path'])}"
+    })
+
+    elif result["type"] == "video":
+        return JSONResponse({
+            "original_text": result["original_text"],
+            "translated_text": result["translated_text"],
+            "video_url": f"http://127.0.0.1:8000/download/{os.path.basename(result['video_path'])}"
+    })
 
     else:
-        return FileResponse(
-            result["output_path"],
-            media_type="video/mp4",
-            filename="translated_video.mp4"
-        )
+        return JSONResponse(
+            {"error": "Unsupported file type"},
+            status_code=400
+    )
+
+
+
+@router.get("/download/{filename}")
+def download_file(filename: str):
+    file_path = f"temp_audio/{filename}"
+
+    if filename.endswith(".mp4"):
+        media_type = "video/mp4"
+    else:
+        media_type = "audio/wav"
+
+    return FileResponse(
+        file_path,
+        media_type=media_type,
+        filename=filename
+    )
+
+
+
+@router.post("/process-youtube-video")
+def process_youtube_video_api(
+    youtube_url: str,
+    source_lang: str = "en",
+    target_lang: str = "hi"
+):
+    result = process_youtube_video(
+        youtube_url,
+        source_lang,
+        target_lang
+    )
+
+    return JSONResponse({
+        "original_text": result["original_text"],
+        "translated_text": result["translated_text"],
+        "video_url": f"http://127.0.0.1:8000/download/{os.path.basename(result['video_path'])}"
+    })
+

@@ -13,8 +13,11 @@ def process_file(file_path, source_lang, target_lang):
         )
         return {
             "type": "audio",
-            "output_path": result["audio_path"]
+            "original_text": result["original_text"],
+            "translated_text": result["translated_text"],
+            "audio_path": result["audio_path"]
         }
+
 
     elif ext in [".mp4", ".mkv"]:
         output_video = video_to_translated_video(
