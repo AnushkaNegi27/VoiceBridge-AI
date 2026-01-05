@@ -112,7 +112,7 @@ The system is designed to be easily extendable to additional languages supported
 - FastAPI
 - Uvicorn
 - Whisper (Open-source ASR)
-- Hugging Face Transformers (Translation)
+- Hugging Face Transformers (NLLB-200)
 - Piper TTS (Offline Text-to-Speech)
 - Google gTTS (Fallback TTS)
 - FFmpeg
