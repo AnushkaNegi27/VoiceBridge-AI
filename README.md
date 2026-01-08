@@ -4,7 +4,7 @@
 
   **An end-to-end AI system for audio, video, live voice, and YouTube speech translation using open-source multilingual models.**
 
-  [Documentation](https://docs-link.com) <!-- TODO: Add documentation link -->
+  
 </div>
 
 ---
@@ -94,14 +94,6 @@ Currently supported languages include:
 - German (de)
 
 The system is designed to be easily extendable to additional languages supported by NLLB-200.
-
----
-
-## 🖥️ Screenshots
-
-<!-- TODO: Add actual screenshots of the application's user interface -->
-![Screenshot of VoiceBridge-AI Dashboard](path-to-dashboard-screenshot.png)
-![Screenshot of Translation in Progress](path-to-translation-screenshot.png)
 
 ---
 
