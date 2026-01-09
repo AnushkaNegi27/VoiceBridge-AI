@@ -2,12 +2,12 @@
 
 <div align="center">
 
-  **An end-to-end AI system for speech-to-speech and video translation across multiple languages.**
+  **An end-to-end AI system for audio, video, live voice, and YouTube speech translation using open-source multilingual models.**
 
-  [Documentation](https://docs-link.com) <!-- TODO: Add documentation link -->
+  
 </div>
 
----
+
 
 ## 📖 Overview
 
@@ -15,15 +15,35 @@ VoiceBridge-AI is a powerful, full-stack application designed to break down lang
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
--   🎯 **End-to-End AI System:** Fully integrated pipeline from speech input to translated voice output.
--   🗣️ **Automatic Speech Recognition (ASR):** Accurately transcribes spoken language from audio and video inputs into text.
--   🌐 **Neural Machine Translation (NMT):** Translates recognized text across multiple languages using state-of-the-art neural models.
--   🎙️ **Text-to-Speech (TTS):** Synthesizes translated text into natural-sounding speech in the target language.
--   🎬 **Video Content Translation:** Processes video files, extracting audio for translation and potentially re-integrating translated audio or captions.
--   🌍 **Multilingual Support:** Designed to handle translation between a diverse range of languages.
--   ⚡ **Scalable Architecture:** Modular design supporting a powerful Python backend for AI inference and a responsive web frontend.
+- 🎧 **Audio File Translation**
+  - Upload WAV / MP3 files
+  - Get translated audio output
+
+- 🎬 **Video Translation**
+  - Upload MP4 / MKV videos
+  - Extracts speech, translates it, and merges translated audio back
+
+- 🎙️ **Live Voice Translation**
+  - Record directly from the microphone
+  - Receive translated speech output
+
+- 🔗 **YouTube Video Translation**
+  - Paste YouTube URL
+  - Generates translated video with dubbed audio
+
+- 🌍 **Multilingual Translation (12+ languages)**
+  - English, Hindi, Gujarati, Marathi, Tamil, Telugu, Bengali, Kannada, Malayalam, French, Spanish, German
+
+- 🧠 **Open-Source AI Models**
+  - Whisper for ASR
+  - NLLB-200 for multilingual translation
+  - Hybrid TTS (Piper + gTTS)
+
+- ⚡ **Local Inference Support**
+  - No mandatory cloud APIs
+  - Works fully on local machine
 
 ---
 
@@ -32,7 +52,7 @@ VoiceBridge-AI is a powerful, full-stack application designed to break down lang
 
 1. User uploads an **audio or video file**
 2. Speech is transcribed using **Whisper (ASR)**
-3. Transcribed text is translated using **Transformer-based NMT**
+3. Transcribed text is translated using **NLLB-200**
 4. Translated text is converted into speech
 5. Output is returned as:
    - Translated audio file, or
@@ -51,15 +71,29 @@ VoiceBridge-AI uses a **hybrid TTS approach**:
   - Ensures wider language coverage  
   - Used when a language is not supported by Piper  
 
+This hybrid approach was chosen to avoid high GPU/CPU load while still maintaining wide language support.
 This approach balances **performance**, **offline capability**, and **language support**.
 
 ---
 
-## 🖥️ Screenshots
+## 🌍 Supported Languages
 
-<!-- TODO: Add actual screenshots of the application's user interface -->
-![Screenshot of VoiceBridge-AI Dashboard](path-to-dashboard-screenshot.png)
-![Screenshot of Translation in Progress](path-to-translation-screenshot.png)
+Currently supported languages include:
+
+- English (en)
+- Hindi (hi)
+- Gujarati (gu)
+- Marathi (mr)
+- Tamil (ta)
+- Telugu (te)
+- Bengali (bn)
+- Kannada (kn)
+- Malayalam (ml)
+- French (fr)
+- Spanish (es)
+- German (de)
+
+The system is designed to be easily extendable to additional languages supported by NLLB-200.
 
 ---
 
@@ -70,7 +104,7 @@ This approach balances **performance**, **offline capability**, and **language s
 - FastAPI
 - Uvicorn
 - Whisper (Open-source ASR)
-- Hugging Face Transformers (Translation)
+- Hugging Face Transformers (NLLB-200)
 - Piper TTS (Offline Text-to-Speech)
 - Google gTTS (Fallback TTS)
 - FFmpeg
@@ -89,12 +123,17 @@ VoiceBridge-AI/
 ├── backend/
 │   ├── app.py
 │   ├── routes/
+|   |   └── api.py
 │   ├── services/
 │   │   ├── asr.py
+|   |   ├── master_pipeline.py
+|   |   ├── packaging.py
+|   |   ├── pipeline.py
 │   │   ├── translation.py
 │   │   ├── tts.py
-│   │   ├── pipeline.py
-│   │   └── video_pipeline.py
+│   │   ├── video_pipeline.py
+│   │   └── youtube_video_pipeline.py
+|   |
 │   └── requirements.txt
 │
 ├── frontend/
@@ -168,19 +207,26 @@ http://localhost:5173
 
 ## 🎯 Project Goals
 
--Build a real-world AI pipeline, not just a demo
-
--Emphasize modular design and extensibility
-
--Support audio + video workflows
-
--Balance performance and language coverage
+- Build a real-world AI pipeline (not just a demo)
+- Focus on modular and extensible design
+- Support both audio and video workflows
+- Balance performance, accuracy, and language coverage
 
 ---
 
-## 🔮 Future Improvements
+## 💡 Why VoiceBridge-AI?
 
-🎤 Real-time microphone translation
+Unlike simple translation demos, VoiceBridge-AI focuses on:
+
+- Real multimedia workflows (audio, video, YouTube)
+- Open-source models instead of paid APIs
+- Offline capability
+- End-to-end system design, not isolated components
+
+  ---
+
+
+## 🔮 Future Improvements
 
 ⏱️ Streaming inference for long files
 
